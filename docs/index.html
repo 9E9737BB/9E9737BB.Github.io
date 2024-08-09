@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipboard API Example</title>
+    <title>Auto Copy Example</title>
 </head>
 <body>
-    <h1>Clipboard API Example</h1>
-    <textarea id="output" placeholder="Pasted text will appear here..." rows="10" cols="30"></textarea>
-    <button id="pasteButton">Paste Clipboard Data</button>
+    <h1>Auto Copy Example</h1>
+    <p id="textToCopy">This is the text that will be copied to the clipboard.</p>
     <p id="message"></p>
 
     <script>
-        document.getElementById('pasteButton').addEventListener('click', async () => {
+        async function copyTextToClipboard(text) {
             try {
-                if (navigator.clipboard) {
-                    const clipboardText = await navigator.clipboard.readText();
-                    document.getElementById('output').value = clipboardText;
-                    document.getElementById('message').textContent = '';
-                } else {
-                    document.getElementById('message').textContent = 'Clipboard API not supported.';
-                }
+                await navigator.clipboard.writeText(text);
+                document.getElementById('message').textContent = 'Text copied to clipboard!';
             } catch (err) {
-                document.getElementById('message').textContent = 'Failed to read clipboard contents. Please ensure clipboard permissions are granted.';
+                document.getElementById('message').textContent = 'Failed to copy text. Please allow clipboard access.';
             }
+        }
+
+        window.addEventListener('load', () => {
+            const text = document.getElementById('textToCopy').textContent;
+            copyTextToClipboard(text);
         });
     </script>
 </body>

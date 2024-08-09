@@ -3,41 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipboard API Example</title>
-    <style>
-        .copy-button {
-            margin-top: 10px;
-            cursor: pointer;
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-    </style>
+    <title>Clipboard API Auto-Paste Example</title>
 </head>
 <body>
-    <h1>Clipboard API Example</h1>
-    <p id="text1">This is the first paragraph. Click the button to copy this text.</p>
-    <button class="copy-button" onclick="copyText('text1')">Copy Text</button>
-
-    <p id="text2">This is the second paragraph. Click the button to copy this text.</p>
-    <button class="copy-button" onclick="copyText('text2')">Copy Text</button>
+    <h1>Clipboard API Auto-Paste Example</h1>
+    <textarea id="output" placeholder="Pasted text will appear here..." rows="10" cols="30"></textarea>
 
     <script>
-        async function copyText(elementId) {
-            // Get the text content of the specified element
-            const text = document.getElementById(elementId).textContent;
-
+        // Function to read and paste clipboard data
+        async function pasteClipboardData() {
             try {
-                // Write the text to the clipboard
-                await navigator.clipboard.writeText(text);
-                alert('Text copied to clipboard!');
+                // Check if Clipboard API is supported
+                if (navigator.clipboard) {
+                    // Read text from the clipboard
+                    const clipboardText = await navigator.clipboard.readText();
+                    // Paste the text into the textarea
+                    document.getElementById('output').value = clipboardText;
+                } else {
+                    alert('Clipboard API not supported');
+                }
             } catch (err) {
-                console.error('Failed to copy text: ', err);
+                console.error('Failed to read clipboard contents: ', err);
             }
         }
+
+        // Wait for the page to fully load before attempting to paste
+        window.addEventListener('load', () => {
+            // Use a button or user interaction to trigger the paste action
+            // for demonstration purposes
+            pasteClipboardData();
+        });
     </script>
 </body>
 </html>
-

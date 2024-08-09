@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard API Example</title>
+    <style>
+        .copy-button {
+            margin-top: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clipboard API Example</h1>
+    <p id="text1">This is the first paragraph. Click the button to copy this text.</p>
+    <button class="copy-button" onclick="copyText('text1')">Copy Text</button>
+
+    <p id="text2">This is the second paragraph. Click the button to copy this text.</p>
+    <button class="copy-button" onclick="copyText('text2')">Copy Text</button>
+
+    <script>
+        async function copyText(elementId) {
+            // Get the text content of the specified element
+            const text = document.getElementById(elementId).textContent;
+
+            try {
+                // Write the text to the clipboard
+                await navigator.clipboard.writeText(text);
+                alert('Text copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        }
+    </script>
+</body>
+</html>
 

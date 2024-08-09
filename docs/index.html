@@ -3,35 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipboard API Auto-Paste Example</title>
+    <title>Clipboard API Example</title>
 </head>
 <body>
-    <h1>Clipboard API Auto-Paste Example</h1>
+    <h1>Clipboard API Example</h1>
     <textarea id="output" placeholder="Pasted text will appear here..." rows="10" cols="30"></textarea>
+    <button id="pasteButton">Paste Clipboard Data</button>
+    <p id="message"></p>
 
     <script>
-        // Function to read and paste clipboard data
-        async function pasteClipboardData() {
+        document.getElementById('pasteButton').addEventListener('click', async () => {
             try {
-                // Check if Clipboard API is supported
                 if (navigator.clipboard) {
-                    // Read text from the clipboard
                     const clipboardText = await navigator.clipboard.readText();
-                    // Paste the text into the textarea
                     document.getElementById('output').value = clipboardText;
+                    document.getElementById('message').textContent = '';
                 } else {
-                    alert('Clipboard API not supported');
+                    document.getElementById('message').textContent = 'Clipboard API not supported.';
                 }
             } catch (err) {
-                console.error('Failed to read clipboard contents: ', err);
+                document.getElementById('message').textContent = 'Failed to read clipboard contents. Please ensure clipboard permissions are granted.';
             }
-        }
-
-        // Wait for the page to fully load before attempting to paste
-        window.addEventListener('load', () => {
-            // Use a button or user interaction to trigger the paste action
-            // for demonstration purposes
-            pasteClipboardData();
         });
     </script>
 </body>
